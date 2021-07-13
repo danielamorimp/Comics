@@ -3,7 +3,7 @@ package br.com.daniel.comics.usuarios.client.dto;
 import java.util.ArrayList;
 
 public class ResultResponse {
- public int id;
+ public Long id;
  public String title;
  public String description;
  public String isbn;
@@ -15,7 +15,7 @@ public class ResultResponse {
 		return prices;
 	}
  
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 	public String getTitle() {

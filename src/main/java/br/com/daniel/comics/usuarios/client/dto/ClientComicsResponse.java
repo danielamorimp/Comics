@@ -1,7 +1,6 @@
 package br.com.daniel.comics.usuarios.client.dto;
 
 import br.com.daniel.comics.model.Comic;
-import br.com.daniel.comics.usuarios.ComicRepository;
 
 public class ClientComicsResponse {
 
@@ -30,8 +29,11 @@ public class ClientComicsResponse {
 
 	public Comic toModel() {
 		return new Comic(
-				data.results[0].id,
-			);
+				data.results.get(0).id,
+				data.results.get(0).title,
+				data.results.get(0).description,
+				data.results.get(0).isbn,
+				data.results.get(0).prices.get(0).getPrice());
 	}
 
 }
