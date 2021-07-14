@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Usuario {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@Column(nullable = false)
 	private String nome;
@@ -20,6 +20,7 @@ public class Usuario {
 	private String email;
 	@Column(nullable = false, unique = true)
 	private String cpf;
+	private LocalDate nascimento;
 	
 
 	
@@ -30,7 +31,13 @@ public class Usuario {
 		this.nascimento = nascimento;
 	}
 	
-	private LocalDate nascimento;
+	
+
+	public Long getId() {
+		return id;
+	}
+
+
 
 	public String getNome() {
 		return nome;

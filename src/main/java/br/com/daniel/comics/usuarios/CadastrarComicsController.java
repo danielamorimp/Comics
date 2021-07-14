@@ -1,13 +1,22 @@
 package br.com.daniel.comics.usuarios;
 
+import java.net.URI;
+import java.util.Optional;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.daniel.comics.dto.ComicResponse;
+import br.com.daniel.comics.dto.NovoUsuarioResponse;
 import br.com.daniel.comics.model.Comic;
+import br.com.daniel.comics.model.Usuario;
 import br.com.daniel.comics.usuarios.client.ClientComics;
 import br.com.daniel.comics.usuarios.client.dto.ClientComicsResponse;
 import ch.qos.logback.classic.Logger;
@@ -20,21 +29,31 @@ public class CadastrarComicsController {
 	
 	@Autowired
 	private ComicRepository comicRepository;
-
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 	
-	@PostMapping("/cadastrar/{id}")
-	public ClientComicsResponse buscaComics(@PathVariable Long id) {
+	@PostMapping("/cadastrar/{id}/{idUsuario}")
+	public ResponseEntity<?> buscaComics(@PathVariable Long id,@PathVariable Long idUsuario, UriComponentsBuilder uriBuilder) {
+		
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		
+		//if(usuario.isEmpty())return ResponseEntity.notFound().build();
 		
 		ClientComicsResponse resp = clientComics.getClientComicsResponse(id);
-		
 			
-		Comic comic = resp.toModel();
+		Comic comic = resp.toModel(usuario.get());
 		
-		comicRepository.save(comic);
-		return resp;
+		Comic dado = comicRepository.save(comic);
+		
+		URI uri = uriBuilder.path("api/marvel/comic/detalhar/{id}").buildAndExpand(dado.getId()).toUri();
+		
+		return ResponseEntity.created(uri).body(new ComicResponse(dado));
+		
 		
 	}
+
 
 }

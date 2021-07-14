@@ -22,8 +22,12 @@ public class Autores {
 		this.nome = nome;
 		this.idComic = idComic;
 	}
-	
-	public String getNome() {
+
+    public Autores(String name) {
+		this.nome = name;
+    }
+
+    public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {

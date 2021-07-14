@@ -1,6 +1,11 @@
 package br.com.daniel.comics.usuarios.client.dto;
 
+import br.com.daniel.comics.model.Autores;
 import br.com.daniel.comics.model.Comic;
+import br.com.daniel.comics.model.Usuario;
+
+import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 public class ClientComicsResponse {
 
@@ -27,13 +32,17 @@ public class ClientComicsResponse {
 	}
 
 
-	public Comic toModel() {
+	public Comic toModel(Usuario usuario) {
 		return new Comic(
 				data.results.get(0).id,
 				data.results.get(0).title,
 				data.results.get(0).description,
 				data.results.get(0).isbn,
-				data.results.get(0).prices.get(0).getPrice());
+				new BigDecimal(data.results.get(0).prices.get(0).getPrice().toString()),
+				data.results.get(0).creators.items.stream().map( e ->{ return new Autores(e.getName());}).collect(Collectors.toList()),
+				usuario
+			);
+
 	}
 
 }
