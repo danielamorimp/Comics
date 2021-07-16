@@ -14,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.daniel.comics.dto.NovoUsuarioRequest;
 import br.com.daniel.comics.dto.NovoUsuarioResponse;
-import br.com.daniel.comics.model.Comic;
 import br.com.daniel.comics.model.Usuario;
 
 @RestController
@@ -26,11 +25,11 @@ public class CadastroUsuariosController {
 	
 	@PostMapping("/cadastro")
 	public ResponseEntity<?> Cadastrar(@RequestBody @Valid NovoUsuarioRequest request, UriComponentsBuilder uriBuilder){
-		//if(usuarioRepository.existEmail(request.getEmail()))
-			//return ResponseEntity.unprocessableEntity().body("Email já cadstrado");
+		if(usuarioRepository.existsByEmail(request.getEmail()))
+			return ResponseEntity.unprocessableEntity().body("Email já cadstrado");
 	
-		//if(usuarioRepository.existCpf(request.getCpf()))
-			//return ResponseEntity.unprocessableEntity().body("ÇPF já cadastrado");
+		if(usuarioRepository.existsByCpf(request.getCpf()))
+			return ResponseEntity.unprocessableEntity().body("ÇPF já cadastrado");
 		
 		Usuario usuario = usuarioRepository.save(request.toModel());
 		

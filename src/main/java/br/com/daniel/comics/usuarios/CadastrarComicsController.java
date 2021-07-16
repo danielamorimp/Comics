@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.daniel.comics.dto.ComicResponse;
-import br.com.daniel.comics.dto.NovoUsuarioResponse;
 import br.com.daniel.comics.model.Comic;
 import br.com.daniel.comics.model.Usuario;
 import br.com.daniel.comics.usuarios.client.ClientComics;
 import br.com.daniel.comics.usuarios.client.dto.ClientComicsResponse;
+import br.com.daniel.comics.usuarios.service.GeraIsbn;
 import ch.qos.logback.classic.Logger;
 
 @RestController
@@ -33,12 +32,15 @@ public class CadastrarComicsController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private GeraIsbn geraIsbn;
+	
 	protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 	
 	@PostMapping("/cadastrar/{id}/{idUsuario}")
 	public ResponseEntity<?> buscaComics(@PathVariable Long id,@PathVariable Long idUsuario, UriComponentsBuilder uriBuilder) {
 		
-		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
 		
 		//if(usuario.isEmpty())return ResponseEntity.notFound().build();
 		
@@ -49,6 +51,8 @@ public class CadastrarComicsController {
 		Comic dado = comicRepository.save(comic);
 		
 		URI uri = uriBuilder.path("api/marvel/comic/detalhar/{id}").buildAndExpand(dado.getId()).toUri();
+		
+		geraIsbn.isbn();
 		
 		return ResponseEntity.created(uri).body(new ComicResponse(dado));
 		

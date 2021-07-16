@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Long>{
-	//public Boolean existEmail(String email);
-	//public Boolean existCpf(String cpf);
+	public Boolean existsByEmail(String email);
+	public Boolean existsByCpf(String cpf);
 	
 }

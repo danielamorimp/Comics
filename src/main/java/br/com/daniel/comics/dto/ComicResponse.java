@@ -28,6 +28,11 @@ public class ComicResponse {
 		this.idUsuario = idUsuario;
 	}
 	
+	@Deprecated
+	public ComicResponse() {
+		
+	}
+	
 	public ComicResponse(Comic comic) {
 		
 		this.comicId = comic.getComicId();
