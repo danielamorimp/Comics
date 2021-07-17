@@ -17,7 +17,7 @@ import br.com.daniel.comics.model.Comic;
 import br.com.daniel.comics.model.Usuario;
 import br.com.daniel.comics.usuarios.client.ClientComics;
 import br.com.daniel.comics.usuarios.client.dto.ClientComicsResponse;
-import br.com.daniel.comics.usuarios.service.GeraIsbn;
+import br.com.daniel.comics.usuarios.service.RegraDescontoService;
 import ch.qos.logback.classic.Logger;
 
 @RestController
@@ -33,7 +33,7 @@ public class CadastrarComicsController {
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	private GeraIsbn geraIsbn;
+	private RegraDescontoService regra;
 	
 	protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 	
@@ -50,9 +50,9 @@ public class CadastrarComicsController {
 		
 		Comic dado = comicRepository.save(comic);
 		
-		URI uri = uriBuilder.path("api/marvel/comic/detalhar/{id}").buildAndExpand(dado.getId()).toUri();
+		regra.diaSemana(dado);
 		
-		geraIsbn.isbn();
+		URI uri = uriBuilder.path("api/marvel/comic/detalhar/{id}").buildAndExpand(dado.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new ComicResponse(dado));
 		

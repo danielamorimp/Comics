@@ -17,12 +17,12 @@ import javax.persistence.OneToMany;
 public class Comic {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Long comicId;
-	private String titulo;
+	public Long id;
+	public Long comicId;
+	public String titulo;
 	@Column(length = 3000)
-	private String descricao;
-	private String isbn;
+	public String descricao;
+	public String isbn;
 	private BigDecimal preco;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "idComic")
@@ -30,6 +30,8 @@ public class Comic {
 	
 	@ManyToOne
 	private Usuario usuario;
+	public String diaDesconto = null;
+	public Boolean descontoAtivo = false;
 
 	
 	public Comic(Long comicId, String titulo, String descricao, String isbn, BigDecimal preco, List<Autores> autores,Usuario usuario){
@@ -42,6 +44,20 @@ public class Comic {
 		this.autores =  autores;
 		this.usuario = usuario;
 	}
+	
+	
+
+	public String getDiaDesconto() {
+		return diaDesconto;
+	}
+
+
+
+	public Boolean getDescontoItem() {
+		return descontoAtivo;
+	}
+
+
 
 	public Usuario getUsuario() {
 		return usuario;

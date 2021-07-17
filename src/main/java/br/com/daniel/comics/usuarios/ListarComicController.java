@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sun.xml.bind.v2.schemagen.xmlschema.Any;
-
 import br.com.daniel.comics.dto.ComicResponse;
-import br.com.daniel.comics.dto.NovoUsuarioResponse;
 import br.com.daniel.comics.model.Comic;
 import ch.qos.logback.classic.Logger;
 
 @RestController
 @RequestMapping("/api/comics")
 public class ListarComicController {
+	
+	
 	
 	protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 	
@@ -31,14 +30,14 @@ public class ListarComicController {
 	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping("/lista/{id}")
-	public ResponseEntity<ListarComicController> listar(@PathVariable Long id) {
+	public ResponseEntity<List<ComicResponse>> listar(@PathVariable Long id) {
 		
 		if(usuarioRepository.existsById(id) != true) return ResponseEntity.notFound().build();
 		List<Comic> comics = comicRepository.buscarComicUsuario(id);
 	
 		log.info(comics.toString());
 		
-		return ResponseEntity.ok(comics.stream().map(e -> {new ComicResponse(e);}).collect(Collectors.toList()));
+		return ResponseEntity.ok(comics.stream().map(e -> {return new ComicResponse(e);}).collect(Collectors.toList()));
 		
 		
 	}

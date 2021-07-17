@@ -1,11 +1,6 @@
 package br.com.daniel.comics.usuarios.client.dto;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
-
-import br.com.daniel.comics.model.Autores;
-import br.com.daniel.comics.model.Usuario;
 
 public class ResultResponse {
  public Long id;
