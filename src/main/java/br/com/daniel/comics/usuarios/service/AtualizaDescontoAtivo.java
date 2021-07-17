@@ -46,14 +46,21 @@ public class AtualizaDescontoAtivo {
 		switch(diaSemana) {
 			case("MONDAY"):
 				diaSemana = "segunda-feira";
+				break;
 			case("TUESDAY"):
 				diaSemana = "terça-feira";
+				break;
 			case("WEDNESDAY"):
 				diaSemana = "quarta-feira";
+				break;
 			case("THURSDAY"):
 				diaSemana = "quinta-feira";
+				break;
 			case("SATURDAY"):
 				diaSemana = "sexta-feira";
+				break;
+			default:
+				diaSemana = "";
 		}
 
 		return diaSemana;

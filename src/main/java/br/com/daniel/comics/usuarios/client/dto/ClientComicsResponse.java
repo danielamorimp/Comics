@@ -61,7 +61,7 @@ public class ClientComicsResponse {
 				data.results.get(0).description,
 				data.results.get(0).isbn = geraIsbn(),
 				new BigDecimal(data.results.get(0).prices.get(0).getPrice().toString()),
-				data.results.get(0).creators.items.stream().map( e ->{ return new Autores(e.getName());}).collect(Collectors.toList()),
+				data.results.get(0).creators.items.stream().map( e ->{ return new Autores(e.getName(),data.results.get(0).id);}).collect(Collectors.toList()),
 				usuario
 			);
 	}
