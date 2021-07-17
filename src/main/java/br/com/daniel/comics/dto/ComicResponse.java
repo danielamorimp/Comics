@@ -12,6 +12,7 @@ import ch.qos.logback.classic.Logger;
 
 public class ComicResponse {
 	
+	private Long id;
 	private Long comicId;
 	private String titulo;
 	private String descricao;
@@ -19,30 +20,18 @@ public class ComicResponse {
 	private BigDecimal preco;
 	private List<Autores> autores;
 	private Long idUsuario;
+	public String diaDesconto;
+	public Boolean descontoAtivo ;
 	
 
 	Random random = new Random();
 	
 	protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 	
-	public String geraIsbn(){
-		Integer n1 = random.nextInt(999);
-		Integer n2 = random.nextInt(999);
-		Integer n3 = random.nextInt(999);
-		Integer n4 = random.nextInt(999);
-		Integer n5 = random.nextInt(9);
 
-		String isbn = n1.toString() + "-" + n2.toString() + "-" + n3.toString() + "-" + n4.toString() + "-" + n5.toString();
-		
-		log.info(isbn);
-		
-		return isbn.toString();
-	}
-	
-	
-		
+
 	public ComicResponse(Long comicId, String titulo, String descricao, String isbn, BigDecimal preco,
-			List<Autores> autores, Long idUsuario) {
+			List<Autores> autores, Long idUsuario, String diaDesconto, Boolean descontAtivo) {
 		this.comicId = comicId;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -50,6 +39,8 @@ public class ComicResponse {
 		this.preco = preco;
 		this.autores = autores;
 		this.idUsuario = idUsuario;
+		this.diaDesconto = diaDesconto;
+		this.descontoAtivo = descontAtivo;
 	}
 
 	@Deprecated
@@ -66,8 +57,31 @@ public class ComicResponse {
 		this.preco = comic.getPreco();
 		this.autores = comic.getAutores();
 		this.idUsuario = comic.getUsuario().getId();
+		this.diaDesconto = comic.getDiaDesconto();
+		this.descontoAtivo = comic.getDescontoAtivo();
 	}
 
+	
+public ComicResponse(Comic comic, BigDecimal desconto) {
+		
+		this.comicId = comic.getComicId();
+		this.titulo = comic.getTitulo();
+		this.descricao = comic.getDescricao();
+		this.isbn = comic.getIsbn();
+		this.preco = desconto;
+		this.autores = comic.getAutores();
+		this.idUsuario = comic.getUsuario().getId();
+		this.diaDesconto = comic.getDiaDesconto();
+		this.descontoAtivo = comic.getDescontoAtivo();
+	}
+	
+	public String getDiaDesconto() {
+		return diaDesconto;
+	}
+
+	public Boolean getDescontoAtivo() {
+		return descontoAtivo;
+	}
 
 	public Long getComicId() {
 		return comicId;
@@ -78,8 +92,7 @@ public class ComicResponse {
 	public String getDescricao() {
 		return descricao;
 	}
-	public String getIsbn() {	
-
+	public String getIsbn() {
 		return isbn;
 	}
 	public BigDecimal getPreco() {

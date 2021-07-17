@@ -23,7 +23,7 @@ public class Comic {
 	@Column(length = 3000)
 	public String descricao;
 	public String isbn;
-	private BigDecimal preco;
+	public BigDecimal preco;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "idComic")
 	private List<Autores> autores = new ArrayList<Autores>();
@@ -53,7 +53,7 @@ public class Comic {
 
 
 
-	public Boolean getDescontoItem() {
+	public Boolean getDescontoAtivo() {
 		return descontoAtivo;
 	}
 

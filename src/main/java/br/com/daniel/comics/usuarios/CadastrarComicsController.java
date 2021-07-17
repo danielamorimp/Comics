@@ -49,14 +49,15 @@ public class CadastrarComicsController {
 		Comic comic = resp.toModel(usuario.get());
 		
 		Comic dado = comicRepository.save(comic);
+
+		log.info(dado.isbn);
 		
 		regra.diaSemana(dado);
 		
 		URI uri = uriBuilder.path("api/marvel/comic/detalhar/{id}").buildAndExpand(dado.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new ComicResponse(dado));
-		
-		
+				
 	}
 
 

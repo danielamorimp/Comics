@@ -21,18 +21,41 @@ public class AtualizaDescontoAtivo {
 	protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 	
 	
-	@Scheduled(fixedDelay = 11000)
+	@Scheduled(fixedDelay = 1100)
 	public List<Comic> teste(){
+		
 		String diaSemana = LocalDate.now().getDayOfWeek().toString();
+
+		String diaTraduzido = traduzDia(diaSemana);
 		
 		List<Comic> comic = comicRepository.findAll();
 		comic.stream().map(e -> {
-			if(e.diaDesconto == diaSemana)
+			if(e.diaDesconto == diaTraduzido)
 				return e.descontoAtivo = true;
 			return false;
 			})						
 			.collect(Collectors.toList());
+		log.info(diaTraduzido);
+
 		
 		return comicRepository.saveAll(comic);
+
+	}
+
+	public String traduzDia(String diaSemana) {
+		switch(diaSemana) {
+			case("MONDAY"):
+				diaSemana = "segunda-feira";
+			case("TUESDAY"):
+				diaSemana = "terça-feira";
+			case("WEDNESDAY"):
+				diaSemana = "quarta-feira";
+			case("THURSDAY"):
+				diaSemana = "quinta-feira";
+			case("SATURDAY"):
+				diaSemana = "sexta-feira";
+		}
+
+		return diaSemana;
 	}
 }

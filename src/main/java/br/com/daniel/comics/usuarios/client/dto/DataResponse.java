@@ -4,4 +4,5 @@ import java.util.List;
 
 public class DataResponse {
  public List<ResultResponse> results;
+
 }

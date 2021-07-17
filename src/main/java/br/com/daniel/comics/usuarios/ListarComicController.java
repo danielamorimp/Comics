@@ -1,5 +1,7 @@
 package br.com.daniel.comics.usuarios;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +39,23 @@ public class ListarComicController {
 	
 		log.info(comics.toString());
 		
-		return ResponseEntity.ok(comics.stream().map(e -> {return new ComicResponse(e);}).collect(Collectors.toList()));
+		return ResponseEntity.ok(comics.stream().map(e -> {
+			float precoDesconto = e.preco.floatValue();
+			BigDecimal preco = e.preco;
+			
+			if(e.descontoAtivo == true){
+				precoDesconto = e.preco.floatValue() - (e.preco.floatValue() * (10/100));
+				preco = new BigDecimal (precoDesconto);
+				
+			}
+			if(e.descontoAtivo == false) {
+				 preco =  e.preco;
+			}	
+
+			
+			return new ComicResponse(e, preco.setScale(2,RoundingMode.FLOOR));})
+				
+				.collect(Collectors.toList()));
 		
 		
 	}
