@@ -24,11 +24,6 @@ public class ComicResponse {
 	public Boolean descontoAtivo ;
 	
 
-	Random random = new Random();
-	
-	protected final Logger log = (Logger) LoggerFactory.getLogger(getClass());
-	
-
 
 	public ComicResponse(Long comicId, String titulo, String descricao, String isbn, BigDecimal preco,
 			List<Autores> autores, Long idUsuario, String diaDesconto, Boolean descontAtivo) {

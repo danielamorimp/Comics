@@ -33,21 +33,13 @@ public class Usuario {
 	
 	
 	
-	
 	@Deprecated
 	public Usuario() {
 	}
 
-
-
-
-
 	public Long getId() {
 		return id;
 	}
-
-
-
 	public String getNome() {
 		return nome;
 	}

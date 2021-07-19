@@ -42,7 +42,7 @@ public class CadastrarComicsController {
 		
 		Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
 		
-		//if(usuario.isEmpty())return ResponseEntity.notFound().build();
+		if(usuario.isEmpty())return ResponseEntity.notFound().build();
 		
 		ClientComicsResponse resp = clientComics.getClientComicsResponse(id);
 			

@@ -41,10 +41,12 @@ public class ListarComicController {
 		
 		return ResponseEntity.ok(comics.stream().map(e -> {
 			float precoDesconto = e.preco.floatValue();
+			Double porcentagem = 0.1;
+			float porcentagemDouble = porcentagem.floatValue();
 			BigDecimal preco = e.preco;
 			
 			if(e.descontoAtivo == true){
-				precoDesconto = e.preco.floatValue() - (e.preco.floatValue() * (10/100));
+				precoDesconto = (e.preco.floatValue() - (e.preco.floatValue() * porcentagemDouble));
 				preco = new BigDecimal (precoDesconto);
 				
 			}

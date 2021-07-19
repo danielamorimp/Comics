@@ -23,8 +23,9 @@ public class CadastroUsuariosController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@PostMapping("/cadastro")
+	@PostMapping("/cadastro/usuario")
 	public ResponseEntity<?> Cadastrar(@RequestBody @Valid NovoUsuarioRequest request, UriComponentsBuilder uriBuilder){
+		
 		if(usuarioRepository.existsByEmail(request.getEmail()))
 			return ResponseEntity.unprocessableEntity().body("Email já cadstrado");
 	

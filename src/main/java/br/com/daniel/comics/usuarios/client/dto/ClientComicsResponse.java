@@ -14,14 +14,9 @@ public class ClientComicsResponse {
 
 	Random random = new Random();
 
-	private String status;
-	private int code;
+
 	private DataResponse data;
 	
-	public ClientComicsResponse(int code, String status) {
-		this.code = code;
-		this.status = status;
-	}
 
 
 	public String geraIsbn(){
@@ -37,14 +32,6 @@ public class ClientComicsResponse {
 
 	}
 
-
-
-	public int getCode() {
-		return code;
-	}
-	public String getStatus() {
-		return status;
-	}
 
 
 	public DataResponse getData() {
